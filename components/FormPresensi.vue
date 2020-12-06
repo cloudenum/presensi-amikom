@@ -105,7 +105,6 @@ export default {
       // const encryptedPayload = CryptoJS.enc.Base64.stringify(utf8)
       const encryptedPayload = encrypted.toString()
       // console.log(encryptedPayload)
-
       // await this.$axios
       //   .post(
       //     // 'http://202.91.9.14:6000/api/v1.2/presensi_mobile/validate_ticket',
@@ -142,6 +141,7 @@ export default {
             data: encryptedPayload,
           },
           {
+            port: process.env.PORT || 3000,
             transformRequest: [
               function (data) {
                 data = JSON.stringify(data)

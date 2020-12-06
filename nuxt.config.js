@@ -7,6 +7,10 @@ export default {
     // { path: '/api/presensi', handler: '~/api/presensi.js' },
   ],
 
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+  },
+
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'Presensi Mahasiswa Universitas AMIKOM Yogyakarta | Unofficial',

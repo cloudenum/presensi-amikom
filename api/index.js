@@ -2,15 +2,13 @@ const http = require('http')
 const bodyParser = require('body-parser')
 const app = require('express')()
 const axios = require('axios').default
-const host = process.env.HOST || 'localhost'
-const port = process.env.PORT || 3000
 
 axios.defaults.headers['User-Agent'] = '@m!k0mXv=#neMob!le'
 
 app.use(bodyParser.json())
 app.options('/*', (req, res) => {
   console.log(req.url)
-  res.setHeader('Access-Control-Allow-Origin', host + ':' + port)
+  res.setHeader('Access-Control-Allow-Origin', '*')
   res.status(200)
 })
 

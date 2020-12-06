@@ -1,9 +1,5 @@
-export default async ({ app, $axios }) => {
-  $axios.defaults.withCredentials = true
-  $axios.defaults.mode = 'no-cors'
+import axios from 'axios'
 
-  $axios.onError((error) => {
-    console.warn('onError', error)
-    app.$swal('Error', error.message, 'error')
-  })
-}
+export default axios.create({
+  baseURL: process.env.baseUrl,
+})
