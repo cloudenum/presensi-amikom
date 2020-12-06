@@ -1,11 +1,11 @@
 <template>
   <div
-    class="container flex flex-col mx-auto my-0 justify-center items-center text-center"
+    class="container p-4 flex flex-col mx-auto my-0 justify-center items-center text-center"
   >
     <div class="space-y-6">
       <Logo />
       <h1
-        class="font-quicksand font-light text-8xl text-white tracking-wide text-shadow-lg"
+        class="font-quicksand font-light text-4xl md:text-7xl lg:text-8xl text-white tracking-wide text-shadow-lg"
       >
         Presensi Amikom
       </h1>

@@ -2,6 +2,11 @@ export default {
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'static',
 
+  serverMiddleware: [
+    { path: '/api', handler: '~/api/index.js' },
+    // { path: '/api/presensi', handler: '~/api/presensi.js' },
+  ],
+
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'Presensi Mahasiswa Universitas AMIKOM Yogyakarta | Unofficial',
