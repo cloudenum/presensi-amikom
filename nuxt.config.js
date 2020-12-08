@@ -10,7 +10,7 @@ export default {
   ],
 
   env: {
-    baseUrl: process.env.BASE_URL,
+    baseURL: process.env.BASE_URL,
     securityKey: process.env.SECURITY_KEY,
   },
 
