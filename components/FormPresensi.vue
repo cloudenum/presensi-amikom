@@ -86,7 +86,7 @@ export default {
   },
   methods: {
     submitForm() {
-      // console.log(this.securityKey)
+      console.log(this.securityKey)
       const key = CryptoJS.enc.Hex.parse(this.securityKey)
       const timeData = calculateSomethingFromDateWithFormat(this.nim)
       const payload = this.code + ';' + this.nim + ';' + timeData
