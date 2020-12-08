@@ -5,8 +5,8 @@ export default {
   target: 'static',
 
   serverMiddleware: [
-    { path: '/api', handler: '~/api/index.js' },
-    // { path: '/api/presensi', handler: '~/api/presensi.js' },
+    { path: '/api/login', handler: '~/api/login.js' },
+    { path: '/api/presensi', handler: '~/api/presensi.js' },
   ],
 
   env: {
