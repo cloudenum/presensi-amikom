@@ -86,7 +86,7 @@ export default {
   },
   methods: {
     submitForm() {
-      console.log(this.securityKey)
+      // console.log(this.securityKey)
       const key = CryptoJS.enc.Hex.parse(this.securityKey)
       const timeData = calculateSomethingFromDateWithFormat(this.nim)
       const payload = this.code + ';' + this.nim + ';' + timeData
@@ -132,7 +132,7 @@ export default {
       //     console.log(error.response.status)
       //     console.log(error.response.data)
       //   })
-      console.log(this.$axios.defaults.baseURL)
+      // console.log(this.$axios.defaults.baseURL)
       this.$axios
         .post(
           // 'http://202.91.9.14:6000/api/v1.2/presensi_mobile/validate_ticket',
