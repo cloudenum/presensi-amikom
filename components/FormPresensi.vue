@@ -57,6 +57,7 @@
 
 <script>
 import CryptoJS from 'crypto-js'
+import bodymovin from 'lottie-web'
 
 function calculateSomethingFromDateWithFormat(nim) {
   const shortNim = nim.charAt(0) + nim.charAt(4) + nim.charAt(6) + nim.charAt(8)
@@ -94,7 +95,21 @@ export default {
         allowOutsideClick: false,
         allowEnterKey: false,
         showConfirmButton: false,
-        text: 'Mengirim data presensi...',
+        html: `
+        <div class="flex flex-col my-0 mx-auto">
+          <div id="process-anim" class="w-full"></div>
+        </div>
+        `,
+        willOpen(dom) {
+          // console.log(dom)
+          bodymovin.loadAnimation({
+            container: document.querySelector('#process-anim'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'https://assets4.lottiefiles.com/temp/lf20_yGoGWr.json',
+          })
+        },
       })
       // console.log(this.securityKey)
       const key = CryptoJS.enc.Hex.parse(this.securityKey)
