@@ -17,7 +17,7 @@
         required
       />
     </label>
-    <label class="block">
+    <!-- <label class="block">
       <span class="text-gray-700">Password</span>
       <input
         id="pass"
@@ -29,7 +29,7 @@
         pattern="\d{5}"
         required
       />
-    </label>
+    </label> -->
     <label class="block">
       <span class="text-gray-700">Kode Presensi</span>
       <input
@@ -45,7 +45,9 @@
     </label>
     <div>
       <button
-        class="transition-background-color ease-linear duration-300 bg-purple-600 text-white text-base font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
+        :disabled="!code || !nim"
+        type="submit"
+        class="transition-background-color ease-linear duration-300 bg-purple-600 text-white text-base font-semibold py-2 px-4 rounded-lg shadow-md disabled:opacity-50 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
       >
         Presensi
       </button>
@@ -86,6 +88,14 @@ export default {
   },
   methods: {
     submitForm() {
+      // this.$swal.isLoading()
+      this.$swal({
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        allowEnterKey: false,
+        showConfirmButton: false,
+        text: 'Mengirim data presensi...',
+      })
       // console.log(this.securityKey)
       const key = CryptoJS.enc.Hex.parse(this.securityKey)
       const timeData = calculateSomethingFromDateWithFormat(this.nim)
@@ -133,6 +143,17 @@ export default {
       //     console.log(error.response.data)
       //   })
       // console.log(this.$axios.defaults.baseURL)
+
+      this.$on('attend-succes', (data) => {
+        // console.log(arg)
+        this.$swal('Berhasil', data.message, 'success')
+      })
+
+      this.$on('attend-failed', (data) => {
+        // console.log(data)
+        this.$swal('Gagal', data.message, data.type)
+      })
+
       this.$axios
         .post(
           // 'http://202.91.9.14:6000/api/v1.2/presensi_mobile/validate_ticket',
@@ -153,15 +174,24 @@ export default {
           }
         )
         .then((res) => {
-          this.$swal('Success', res.data.message, 'success')
+          this.$emit('attend-success', { data: res.data })
+          // this.$swal('Success', res.data.message, 'success')
           // console.log(res)
         })
         .catch((error) => {
           // console.log(error.response.data)
           if (error.response.status === 422) {
-            this.$swal('Failed', 'Sudah presensi!', 'warning')
+            this.$emit('attend-failed', {
+              message: 'Sudah presensi!',
+              type: 'warning',
+            })
+            // this.$swal('Failed', 'Sudah presensi!', 'warning')
           } else {
-            this.$swal('Failed', 'Presensi gagal!', 'warning')
+            this.$emit('attend-failed', {
+              message: 'Mungkin kode atau NIM salah.',
+              type: 'error',
+            })
+            // this.$swal('Failed', 'Presensi gagal!', 'warning')
           }
         })
     },
