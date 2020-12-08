@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const http = require('http')
 const bodyParser = require('body-parser')
 const app = require('express')()
@@ -7,9 +9,9 @@ axios.defaults.headers['User-Agent'] = '@m!k0mXv=#neMob!le'
 
 app.use(bodyParser.json())
 app.options('/*', (req, res) => {
-  console.log(req.url)
+  // console.log(req.url)
   res.setHeader('Access-Control-Allow-Origin', '*')
-  res.status(200)
+  res.status(204)
 })
 
 app.post('/login', async (req, res) => {
@@ -35,7 +37,7 @@ app.post('/login', async (req, res) => {
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        console.log(error.request._header)
+        // console.log(error.request._header)
         res.status(error.response.status)
         res.send(error.response.data)
       } else if (error.request) {
@@ -46,19 +48,21 @@ app.post('/login', async (req, res) => {
       } else {
         // Something happened in setting up the request that triggered an Error
         res.status(500).send(JSON.stringify({ Message: 'Error' }))
-        console.log('Error', error.response.data.message)
+        // console.log('Error', error.response.data.message)
       }
     })
 })
 
 app.post('/presensi', async (req, res) => {
+  // console.log(req.body)
+  // console.log(process.env.API_KEY)
   await axios
     .post(
       'http://202.91.9.14:6000/api/v1.2/presensi_mobile/validate_ticket',
       req.body,
       {
         headers: {
-          'X-Api-Key': 'sGSCQUZTJlnwPOZuoSQLPXykISmNMDvPgsya',
+          'X-Api-Key': process.env.API_KEY,
           'Content-Type': 'application/json',
           Host: '202.91.9.14:6000',
         },
@@ -79,12 +83,12 @@ app.post('/presensi', async (req, res) => {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
-        console.log(error.request.data)
+        // console.log(error.request.data)
         res.status(204).send(JSON.stringify({ message: '' }))
       } else {
         // Something happened in setting up the request that triggered an Error
         res.status(500).send(JSON.stringify({ message: 'Error' }))
-        console.log('Error', error.response.data.message)
+        // console.log('Error', error.response.data.message)
       }
     })
 })

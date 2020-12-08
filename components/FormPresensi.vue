@@ -39,7 +39,7 @@
         class="transition-border-color duration-500 ease-linear mt-1 block w-full rounded-full bg-gray-200 focus:border-amikom focus:bg-white outline-none"
         type="text"
         placeholder="Kode presensi"
-        pattern="[^_\W]{6}"
+        pattern="[^_\W]{5}"
         required
       />
     </label>
@@ -81,13 +81,13 @@ export default {
       nim: '',
       pass: '',
       code: '',
+      securityKey: process.env.securityKey,
     }
   },
   methods: {
     submitForm() {
-      const key = CryptoJS.enc.Hex.parse(
-        '927B0701266413AC10B52019349808DE927B0701266413AC'
-      )
+      // console.log(this.securityKey)
+      const key = CryptoJS.enc.Hex.parse(this.securityKey)
       const timeData = calculateSomethingFromDateWithFormat(this.nim)
       const payload = this.code + ';' + this.nim + ';' + timeData
       // console.log(timeData)
@@ -141,13 +141,15 @@ export default {
             data: encryptedPayload,
           },
           {
-            port: process.env.PORT || 3000,
             transformRequest: [
               function (data) {
                 data = JSON.stringify(data)
                 return data
               },
             ],
+            headers: {
+              'Content-Type': 'application/json',
+            },
           }
         )
         .then((res) => {
@@ -156,9 +158,11 @@ export default {
         })
         .catch((error) => {
           // console.log(error.response.data)
-          // const data = JSON.parse(error.response.data)
-          this.$swal('Failed', error.response.data.message, 'warning')
-          // console.log(error)
+          if (error.response.status === 422) {
+            this.$swal('Failed', 'Sudah presensi!', 'warning')
+          } else {
+            this.$swal('Failed', 'Presensi gagal!', 'warning')
+          }
         })
     },
   },

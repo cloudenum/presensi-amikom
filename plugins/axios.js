@@ -1,5 +1,3 @@
-import axios from 'axios'
-
-export default axios.create({
-  baseURL: process.env.baseUrl,
-})
+export default function ({ $axios, redirect }) {
+  $axios.defaults.baseUrl = process.env.baseUrl
+}
