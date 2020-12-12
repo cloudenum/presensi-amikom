@@ -159,7 +159,7 @@ export default {
       //   })
       // console.log(this.$axios.defaults.baseURL)
 
-      this.$on('attend-succes', (data) => {
+      this.$on('attend-success', (data) => {
         // console.log(arg)
         this.$swal('Berhasil', data.message, 'success')
       })
