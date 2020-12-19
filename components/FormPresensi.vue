@@ -95,21 +95,13 @@ export default {
         allowOutsideClick: false,
         allowEnterKey: false,
         showConfirmButton: false,
-        html: `
-        <div class="flex flex-col my-0 mx-auto">
-          <div id="process-anim" class="w-full"></div>
-        </div>
+        background: 'rgba(0, 0, 0, 0)',
+        backdrop: `
+          rgba(20, 20, 20, 0.8)
+          url("/animations/nyan-cat.gif")
+          center
+          no-repeat
         `,
-        willOpen(dom) {
-          // console.log(dom)
-          bodymovin.loadAnimation({
-            container: document.querySelector('#process-anim'),
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path: 'https://assets4.lottiefiles.com/temp/lf20_yGoGWr.json',
-          })
-        },
       })
       // console.log(this.securityKey)
       const key = CryptoJS.enc.Hex.parse(this.securityKey)
@@ -166,7 +158,28 @@ export default {
 
       this.$on('attend-failed', (data) => {
         // console.log(data)
-        this.$swal('Gagal', data.message, data.type)
+        if (data.slap) {
+          this.$swal({
+            html: `
+              <div class="flex flex-col my-0 mx-auto">
+                <div id="slap-anim" class="w-full"></div>
+                <h4 class="w-full">${data.message}</h4>
+              </div>
+            `,
+            willOpen(dom) {
+              // console.log(dom)
+              bodymovin.loadAnimation({
+                container: document.querySelector('#slap-anim'),
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: '/animations/kicking-cats.json',
+              })
+            },
+          })
+        } else {
+          this.$swal('Gagal', data.message, data.type)
+        }
       })
 
       this.$axios
@@ -199,12 +212,14 @@ export default {
             this.$emit('attend-failed', {
               message: 'Sudah presensi!',
               type: 'warning',
+              slap: true,
             })
             // this.$swal('Failed', 'Sudah presensi!', 'warning')
           } else {
             this.$emit('attend-failed', {
               message: 'Mungkin kode atau NIM salah.',
               type: 'error',
+              slap: false,
             })
             // this.$swal('Failed', 'Presensi gagal!', 'warning')
           }
