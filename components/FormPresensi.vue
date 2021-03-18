@@ -1,7 +1,7 @@
 <template>
   <form
     id="form-presensi"
-    class="w-full font-sans space-y-4"
+    class="w-full font-sans space-y-4 text-black"
     @submit.prevent="submitForm"
   >
     <label class="block">
